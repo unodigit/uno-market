@@ -1,0 +1,24 @@
+{
+  "enabled": true,
+  "maxSize": 50,
+  "ttl": 300000,
+  "strategies": {
+    "component-templates": {
+      "ttl": 600000,
+      "maxSize": 20
+    },
+    "styling-patterns": {
+      "ttl": 300000,
+      "maxSize": 15
+    },
+    "linting-results": {
+      "ttl": 120000,
+      "maxSize": 10
+    },
+    "test-patterns": {
+      "ttl": 300000,
+      "maxSize": 5
+    }
+  },
+  "evictionPolicy": "lru"
+}

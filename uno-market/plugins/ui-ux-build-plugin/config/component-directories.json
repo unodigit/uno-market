@@ -1,0 +1,89 @@
+{
+  "defaultOutputDirectory": "src/components",
+  "directoryPatterns": {
+    "components": "src/components",
+    "pages": "src/pages",
+    "layouts": "src/layouts",
+    "hooks": "src/hooks",
+    "utils": "src/utils",
+    "types": "src/types",
+    "assets": "src/assets",
+    "styles": "src/styles",
+    "tests": "src/tests",
+    "stories": "src/stories"
+  },
+  "outputConfigurations": {
+    "component": {
+      "directory": "src/components",
+      "createIndexFile": true,
+      "createTestFile": true,
+      "createStoryFile": false,
+      "subdirectories": {
+        "ui": "src/components/ui",
+        "forms": "src/components/forms",
+        "layout": "src/components/layout",
+        "navigation": "src/components/navigation",
+        "feedback": "src/components/feedback",
+        "data": "src/components/data"
+      }
+    },
+    "page": {
+      "directory": "src/pages",
+      "createIndexFile": true,
+      "createTestFile": true,
+      "createStoryFile": false
+    },
+    "hook": {
+      "directory": "src/hooks",
+      "createIndexFile": true,
+      "createTestFile": true,
+      "createStoryFile": false
+    },
+    "utility": {
+      "directory": "src/utils",
+      "createIndexFile": true,
+      "createTestFile": true,
+      "createStoryFile": false
+    }
+  },
+  "fileNamingConventions": {
+    "componentFiles": {
+      "main": "PascalCase.tsx",
+      "test": "PascalCase.test.tsx",
+      "story": "PascalCase.stories.tsx",
+      "index": "index.ts",
+      "types": "PascalCase.types.ts"
+    },
+    "directoryStructure": {
+      "style": "kebab-case",
+      "groupBy": "feature"
+    }
+  },
+  "pathMapping": {
+    "baseUrl": "@",
+    "paths": {
+      "@components": "src/components",
+      "@pages": "src/pages",
+      "@hooks": "src/hooks",
+      "@utils": "src/utils",
+      "@types": "src/types",
+      "@assets": "src/assets",
+      "@styles": "src/styles",
+      "@tests": "src/tests"
+    }
+  },
+  "monorepoSupport": {
+    "enabled": true,
+    "packages": [
+      "packages/components",
+      "pages",
+      "shared",
+      "utils"
+    ],
+    "workspaceMapping": {
+      "components": "packages/components/src",
+      "ui": "packages/components/src/ui",
+      "forms": "packages/components/src/forms"
+    }
+  }
+}

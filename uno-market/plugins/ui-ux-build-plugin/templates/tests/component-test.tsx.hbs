@@ -1,0 +1,174 @@
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import {{#if hasCustomRender}}{ customRender } from '../test-utils';{{else}}{ render } from '@testing-library/react';{{/if}}
+import { {{componentName}} } from './{{componentName}}';
+
+{{#if hasMocks}}
+{{mocks}}
+{{/if}}
+
+describe('{{componentName}}', () => {
+  {{#if hasBeforeEach}}
+  beforeEach(() => {
+    {{beforeEach}}
+  });
+  {{/if}}
+
+  {{#if hasAfterEach}}
+  afterEach(() => {
+    {{afterEach}}
+  });
+  {{/if}}
+
+  it('renders without crashing', () => {
+    {{#if hasCustomRender}}
+    customRender(<{{componentName}} {{#if hasRequiredProps}}props{{/if}} />);
+    {{else}}
+    render(<{{componentName}} {{#if hasRequiredProps}}{...props}{{/if}} />);
+    {{/if}}
+
+    {{#if hasContentExpectations}}
+    {{contentExpectations}}
+    {{/if}}
+  });
+
+  {{#if hasRequiredProps}}
+  it('renders with required props', () => {
+    {{#if hasCustomRender}}
+    customRender(<{{componentName}} {{requiredProps}} />);
+    {{else}}
+    render(<{{componentName}} {{requiredProps}} />);
+    {{/if}}
+
+    {{#each requiredPropsExpectations}}
+    expect({{this}}).toBeInTheDocument();
+    {{/each}}
+  });
+  {{/if}}
+
+  {{#if hasOptionalProps}}
+  it('handles optional props gracefully', () => {
+    {{#if hasCustomRender}}
+    customRender(<{{componentName}} {{allProps}} />);
+    {{else}}
+    render(<{{componentName}} {{allProps}} />);
+    {{/if}}
+
+    {{#each optionalPropsExpectations}}
+    expect({{this}}).toBeInTheDocument();
+    {{/each}}
+  });
+  {{/if}}
+
+  {{#if hasChildren}}
+  it('renders children correctly', () => {
+    {{#if hasCustomRender}}
+    customRender(
+      <{{componentName}} {{requiredProps}}>
+        <div>Test Child</div>
+      </{{componentName}}>
+    );
+    {{else}}
+    render(
+      <{{componentName}} {{requiredProps}}>
+        <div>Test Child</div>
+      </{{componentName}}>
+    );
+    {{/if}}
+
+    expect(screen.getByText('Test Child')).toBeInTheDocument();
+  });
+  {{/if}}
+
+  {{#if hasClickHandlers}}
+  it('handles click events', async () => {
+    const handleClick = vi.fn();
+
+    {{#if hasCustomRender}}
+    customRender(<{{componentName}} {{requiredProps}} onClick={handleClick} />);
+    {{else}}
+    render(<{{componentName}} {{requiredProps}} onClick={handleClick} />);
+    {{/if}}
+
+    {{#each clickableElements}}
+    const {{this}} = screen.getByRole('button');
+    fireEvent.click({{this}});
+    {{/each}}
+
+    expect(handleClick).toHaveBeenCalled();
+  });
+  {{/if}}
+
+  {{#if hasFormElements}}
+  it('handles form interactions', async () => {
+    const handleChange = vi.fn();
+
+    {{#if hasCustomRender}}
+    customRender(<{{componentName}} {{requiredProps}} onChange={handleChange} />);
+    {{else}}
+    render(<{{componentName}} {{requiredProps}} onChange={handleChange} />);
+    {{/if}}
+
+    {{#each formElements}}
+    const {{this.element}} = screen.getByLabelText('{{this.label}}');
+    fireEvent.change({{this.element}}, { target: { value: '{{this.value}}' } });
+    {{/each}}
+
+    expect(handleChange).toHaveBeenCalled();
+  });
+  {{/if}}
+
+  {{#if hasAccessibility}}
+  describe('accessibility', () => {
+    it('has proper ARIA attributes', () => {
+      {{#if hasCustomRender}}
+      customRender(<{{componentName}} {{requiredProps}} />);
+      {{else}}
+      render(<{{componentName}} {{requiredProps}} />);
+      {{/if}}
+
+      {{#each ariaExpectations}}
+      expect({{this.element}}).toHaveAttribute('{{this.attribute}}', '{{this.value}}');
+      {{/each}}
+    });
+
+    it('supports keyboard navigation', async () => {
+      {{#if hasCustomRender}}
+      customRender(<{{componentName}} {{requiredProps}} />);
+      {{else}}
+      render(<{{componentName}} {{requiredProps}} />);
+      {{/if}}
+
+      {{#each keyboardElements}}
+      const {{this}} = screen.getByRole('{{this.role}}');
+      {{this.focus();
+      expect({{this}}).toHaveFocus();
+      {{/each}}
+    });
+  });
+  {{/if}}
+
+  {{#if hasLoadingStates}}
+  it('shows loading state correctly', () => {
+    {{#if hasCustomRender}}
+    customRender(<{{componentName}} {{requiredProps}} loading={true} />);
+    {{else}}
+    render(<{{componentName}} {{requiredProps}} loading={true} />);
+    {{/if}}
+
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+  });
+  {{/if}}
+
+  {{#if hasErrorStates}}
+  it('handles error states', () => {
+    {{#if hasCustomRender}}
+    customRender(<{{componentName}} {{requiredProps}} error="Test error" />);
+    {{else}}
+    render(<{{componentName}} {{requiredProps}} error="Test error" />);
+    {{/if}}
+
+    expect(screen.getByText('Test error')).toBeInTheDocument();
+  });
+  {{/if}}
+});

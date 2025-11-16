@@ -1,0 +1,180 @@
+{
+  "version": "1.0.0",
+  "integrations": {
+    "marketplace": {
+      "enabled": true,
+      "registry": {
+        "production": "https://marketplace.claude-code.org",
+        "staging": "https://staging-marketplace.claude-code.org",
+        "preview": "https://preview-marketplace.claude-code.org",
+        "local": "http://localhost:3000"
+      },
+      "authentication": {
+        "type": "bearer-token",
+        "tokenEnvVar": "CLAUDE_MARKETPLACE_TOKEN",
+        "headerName": "Authorization"
+      },
+      "endpoints": {
+        "publish": "/api/v1/plugins/publish",
+        "update": "/api/v1/plugins/{pluginId}/update",
+        "validate": "/api/v1/plugins/validate",
+        "metadata": "/api/v1/plugins/{pluginId}",
+        "download": "/api/v1/plugins/{pluginId}/download",
+        "list": "/api/v1/plugins",
+        "search": "/api/v1/plugins/search"
+      }
+    },
+    "quality": {
+      "enabled": true,
+      "tools": {
+        "biome": {
+          "command": "npx biome",
+          "configFile": "biome.json",
+          "timeout": 30000
+        },
+        "typescript": {
+          "command": "npx tsc",
+          "configFile": "tsconfig.json",
+          "timeout": 45000
+        },
+        "vitest": {
+          "command": "npx vitest",
+          "configFile": "vitest.config.ts",
+          "timeout": 60000
+        }
+      }
+    },
+    "notifications": {
+      "enabled": true,
+      "channels": {
+        "slack": {
+          "webhookEnvVar": "SLACK_WEBHOOK_URL",
+          "channel": "#plugin-deployments",
+          "enabled": false
+        },
+        "email": {
+          "smtp": {
+            "hostEnvVar": "SMTP_HOST",
+            "portEnvVar": "SMTP_PORT",
+            "userEnvVar": "SMTP_USER",
+            "passEnvVar": "SMTP_PASS"
+          },
+          "recipients": ["dev-team@claude-plugin.org"],
+          "enabled": true
+        },
+        "webhook": {
+          "urlEnvVar": "DEPLOYMENT_WEBHOOK_URL",
+          "timeout": 5000,
+          "enabled": false
+        }
+      }
+    }
+  },
+  "deployment": {
+    "environments": {
+      "local": {
+        "registry": "local",
+        "validation": {
+          "installation": true,
+          "functionality": true,
+          "performance": false,
+          "quality": false
+        },
+        "timeout": 60000,
+        "retries": 1
+      },
+      "preview": {
+        "registry": "preview",
+        "validation": {
+          "installation": true,
+          "functionality": true,
+          "performance": true,
+          "quality": true
+        },
+        "timeout": 300000,
+        "retries": 3
+      },
+      "staging": {
+        "registry": "staging",
+        "validation": {
+          "installation": true,
+          "functionality": true,
+          "performance": true,
+          "quality": true,
+          "integration": true
+        },
+        "timeout": 600000,
+        "retries": 5
+      },
+      "production": {
+        "registry": "production",
+        "validation": {
+          "installation": true,
+          "functionality": true,
+          "performance": true,
+          "quality": true,
+          "integration": true,
+          "security": true
+        },
+        "timeout": 900000,
+        "retries": 3,
+        "approvalRequired": true
+      }
+    }
+  },
+  "local": {
+    "port": 3000,
+    "host": "localhost",
+    "mockRegistry": true,
+    "enableHotReload": true,
+    "debugMode": true,
+    "logLevel": "info",
+    "cacheDir": ".cache/integrations",
+    "tempDir": ".temp/deployments"
+  },
+  "hooks": {
+    "preDeploy": [
+      "validate-plugin-structure",
+      "check-dependencies",
+      "run-quality-checks",
+      "build-documentation"
+    ],
+    "postDeploy": [
+      "send-notifications",
+      "update-deployment-log",
+      "cleanup-temp-files"
+    ],
+    "onFailure": [
+      "rollback-deployment",
+      "send-failure-notifications",
+      "create-error-report"
+    ]
+  },
+  "security": {
+    "verifySignature": true,
+    "encryptMetadata": true,
+    "allowedOrigins": [
+      "https://marketplace.claude-code.org",
+      "https://staging-marketplace.claude-code.org",
+      "https://preview-marketplace.claude-code.org"
+    ],
+    "rateLimit": {
+      "requestsPerMinute": 10,
+      "burstLimit": 5
+    }
+  },
+  "monitoring": {
+    "enabled": true,
+    "metrics": {
+      "deploymentTime": true,
+      "successRate": true,
+      "errorRate": true,
+      "performanceMetrics": true
+    },
+    "alerts": {
+      "deploymentFailure": true,
+      "performanceDegradation": true,
+      "securityViolation": true
+    }
+  }
+}

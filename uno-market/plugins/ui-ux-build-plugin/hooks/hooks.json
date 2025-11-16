@@ -1,0 +1,344 @@
+{
+  "version": "1.0.0",
+  "hooks": [
+    {
+      "id": "post-tool-use-quality-enforcement",
+      "name": "Quality Enforcement Hook",
+      "description": "Automatically enforce code quality after file operations",
+      "enabled": true,
+      "priority": 1,
+      "triggers": [
+        {
+          "event": "PostToolUse",
+          "tools": ["Write", "Edit"],
+          "conditions": [
+            "file.extension in ['.ts', '.tsx', '.js', '.jsx']",
+            "file.path.includes('src/')"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "bash",
+          "command": "npx biome check --apply ${CLAUDE_PLUGIN_ROOT}/src/**/*.{ts,tsx,js,jsx}",
+          "timeoutMs": 5000,
+          "envVars": {
+            "CLAUDE_PLUGIN_ROOT": "${CLAUDE_PLUGIN_ROOT}"
+          },
+          "onFailure": "warn"
+        },
+        {
+          "type": "skill",
+          "skill": "type-enforcer",
+          "timeoutMs": 3000,
+          "onFailure": "warn"
+        }
+      ],
+      "batching": {
+        "enabled": true,
+        "maxBatchSize": 10,
+        "batchTimeoutMs": 1000
+      }
+    },
+    {
+      "id": "typescript-type-checking",
+      "name": "TypeScript Type Checking Hook",
+      "description": "Automatically run TypeScript type checking after TypeScript file operations",
+      "enabled": true,
+      "priority": 2,
+      "triggers": [
+        {
+          "event": "PostToolUse",
+          "tools": ["Write", "Edit"],
+          "conditions": [
+            "file.extension in ['.ts', '.tsx']",
+            "file.path.includes('src/')",
+            "!file.path.includes('.test.')",
+            "!file.path.includes('.spec.')"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "bash",
+          "command": "npx tsc --noEmit --skipLibCheck",
+          "timeoutMs": 8000,
+          "workingDirectory": "${CLAUDE_PLUGIN_ROOT}",
+          "envVars": {
+            "CLAUDE_PLUGIN_ROOT": "${CLAUDE_PLUGIN_ROOT}"
+          },
+          "onFailure": "warn"
+        },
+        {
+          "type": "bash",
+          "command": "${CLAUDE_PLUGIN_ROOT}/scripts/validate-constitution.js ${file.path}",
+          "timeoutMs": 3000,
+          "onFailure": "warn"
+        }
+      ],
+      "batching": {
+        "enabled": true,
+        "maxBatchSize": 5,
+        "batchTimeoutMs": 1500
+      }
+    },
+    {
+      "id": "import-organization",
+      "name": "Import Organization Hook",
+      "description": "Automatically organize imports after file operations",
+      "enabled": true,
+      "priority": 3,
+      "triggers": [
+        {
+          "event": "PostToolUse",
+          "tools": ["Write", "Edit"],
+          "conditions": [
+            "file.extension in ['.ts', '.tsx', '.js', '.jsx']",
+            "file.path.includes('src/')",
+            "file.content.includes('import')"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "bash",
+          "command": "npx biome check --only=organize/import-order --apply ${file.path}",
+          "timeoutMs": 2000,
+          "onFailure": "warn"
+        },
+        {
+          "type": "skill",
+          "skill": "import-sorter",
+          "timeoutMs": 2000,
+          "onFailure": "warn"
+        }
+      ],
+      "batching": {
+        "enabled": true,
+        "maxBatchSize": 8,
+        "batchTimeoutMs": 800
+      }
+    },
+    {
+      "id": "component-quality-validation",
+      "name": "Component Quality Validation Hook",
+      "description": "Validate React component quality and structure",
+      "enabled": true,
+      "priority": 4,
+      "triggers": [
+        {
+          "event": "PostToolUse",
+          "tools": ["Write", "Edit"],
+          "conditions": [
+            "file.extension == '.tsx'",
+            "file.path.includes('components/')",
+            "file.content.includes('export default')"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "bash",
+          "command": "${CLAUDE_PLUGIN_ROOT}/scripts/validate-constitution.js ${file.path}",
+          "timeoutMs": 3000,
+          "onFailure": "warn"
+        },
+        {
+          "type": "bash",
+          "command": "npx biome check --only=react/* --apply ${file.path}",
+          "timeoutMs": 2000,
+          "onFailure": "warn"
+        }
+      ],
+      "batching": {
+        "enabled": false
+      }
+    },
+    {
+      "id": "format-validation",
+      "name": "Format Validation Hook",
+      "description": "Validate code formatting after file operations",
+      "enabled": true,
+      "priority": 5,
+      "triggers": [
+        {
+          "event": "PostToolUse",
+          "tools": ["Write", "Edit"],
+          "conditions": [
+            "file.extension in ['.ts', '.tsx', '.js', '.jsx', '.json']",
+            "file.path.includes('src/')"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "bash",
+          "command": "npx biome format --check ${file.path}",
+          "timeoutMs": 1500,
+          "onFailure": "warn"
+        }
+      ],
+      "batching": {
+        "enabled": true,
+        "maxBatchSize": 15,
+        "batchTimeoutMs": 500
+      }
+    },
+    {
+      "id": "test-file-validation",
+      "name": "Test File Validation Hook",
+      "description": "Validate test file structure and coverage",
+      "enabled": true,
+      "priority": 6,
+      "triggers": [
+        {
+          "event": "PostToolUse",
+          "tools": ["Write", "Edit"],
+          "conditions": [
+            "file.extension in ['.test.tsx', '.test.ts', '.spec.tsx', '.spec.ts']",
+            "file.path.includes('src/')"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "bash",
+          "command": "npx vitest run ${file.path} --reporter=verbose",
+          "timeoutMs": 10000,
+          "onFailure": "warn"
+        },
+        {
+          "type": "skill",
+          "skill": "test-validator",
+          "timeoutMs": 3000,
+          "onFailure": "warn"
+        }
+      ],
+      "batching": {
+        "enabled": false
+      }
+    },
+    {
+      "id": "configuration-file-validation",
+      "name": "Configuration File Validation Hook",
+      "description": "Validate configuration files after changes",
+      "enabled": true,
+      "priority": 7,
+      "triggers": [
+        {
+          "event": "PostToolUse",
+          "tools": ["Write", "Edit"],
+          "conditions": [
+            "file.name in ['package.json', 'tsconfig.json', 'tailwind.config.js', 'biome.json', 'vite.config.ts']"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "bash",
+          "command": "npm run validate-config",
+          "timeoutMs": 5000,
+          "onFailure": "warn"
+        },
+        {
+          "type": "bash",
+          "command": "node -c ${file.path}",
+          "timeoutMs": 2000,
+          "onFailure": "warn"
+        }
+      ],
+      "batching": {
+        "enabled": false
+      }
+    },
+    {
+      "id": "pre-commit-validation",
+      "name": "Pre-commit Validation Hook",
+      "description": "Validate code quality before commits",
+      "enabled": true,
+      "priority": 8,
+      "triggers": [
+        {
+          "event": "PreToolUse",
+          "tools": ["Bash"],
+          "conditions": [
+            "command.includes('git commit')"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "bash",
+          "command": "${CLAUDE_PLUGIN_ROOT}/scripts/run-quality-check.sh --fix --output json",
+          "timeoutMs": 15000,
+          "blocking": true,
+          "onFailure": "error"
+        }
+      ]
+    },
+    {
+      "id": "quality-metrics-collection",
+      "name": "Quality Metrics Collection Hook",
+      "description": "Collect quality metrics for reporting and analysis",
+      "enabled": true,
+      "priority": 9,
+      "triggers": [
+        {
+          "event": "PostToolUse",
+          "tools": ["Write", "Edit"],
+          "conditions": [
+            "file.extension in ['.ts', '.tsx', '.js', '.jsx']",
+            "file.path.includes('src/')"
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "type": "bash",
+          "command": "${CLAUDE_PLUGIN_ROOT}/scripts/collect-quality-metrics.sh ${file.path}",
+          "timeoutMs": 1000,
+          "onFailure": "ignore"
+        }
+      ],
+      "batching": {
+        "enabled": true,
+        "maxBatchSize": 20,
+        "batchTimeoutMs": 300
+      }
+    }
+  ],
+  "settings": {
+    "parallelExecution": true,
+    "maxConcurrentHooks": 5,
+    "defaultTimeoutMs": 3000,
+    "metrics": {
+      "enabled": true,
+      "collectionInterval": "5m",
+      "retentionPeriod": "30d",
+      "storagePath": "${CLAUDE_PLUGIN_ROOT}/.quality-metrics"
+    },
+    "logging": {
+      "enabled": true,
+      "level": "info",
+      "includeStdout": false,
+      "includeStderr": true,
+      "logFile": "${CLAUDE_PLUGIN_ROOT}/.quality-hooks.log"
+    },
+    "performance": {
+      "maxLatency": 200,
+      "targetCorrectionRate": 95,
+      "batchOptimization": true,
+      "caching": {
+        "enabled": true,
+        "cacheDir": "${CLAUDE_PLUGIN_ROOT}/.hook-cache",
+        "maxCacheSize": "100MB"
+      }
+    },
+    "quality": {
+      "autoFixEnabled": true,
+      "reportFailures": true,
+      "enforceStandards": true,
+      "allowFailureModes": ["warn", "ignore"]
+    }
+  }
+}

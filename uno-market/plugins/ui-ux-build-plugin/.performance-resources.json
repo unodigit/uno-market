@@ -1,0 +1,20 @@
+{
+  "memoryOptimizations": [
+    "Enable object pooling for frequently created objects",
+    "Implement lazy loading for agent modules",
+    "Optimize garbage collection timing",
+    "Reduce memory footprint of cached results"
+  ],
+  "cpuOptimizations": [
+    "Optimize agent task scheduling",
+    "Implement CPU affinity for long-running tasks",
+    "Reduce context switching overhead",
+    "Optimize I/O operations with batching"
+  ],
+  "limits": {
+    "maxMemoryMB": 512,
+    "maxCpuPercent": 80,
+    "ioTimeoutMs": 5000
+  },
+  "monitoring": 5000
+}

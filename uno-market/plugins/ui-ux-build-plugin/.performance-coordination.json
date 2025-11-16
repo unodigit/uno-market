@@ -1,0 +1,62 @@
+{
+  "executionOrder": [
+    {
+      "agent": "ui-architect",
+      "priority": 1,
+      "parallelizable": false
+    },
+    {
+      "agent": "tailwind-stylist",
+      "priority": 2,
+      "parallelizable": true,
+      "waitFor": [
+        "ui-architect"
+      ]
+    },
+    {
+      "agent": "vitest-tester",
+      "priority": 3,
+      "parallelizable": true,
+      "waitFor": [
+        "ui-architect"
+      ]
+    },
+    {
+      "agent": "biome-linter",
+      "priority": 4,
+      "parallelizable": true,
+      "waitFor": [
+        "tailwind-stylist"
+      ]
+    },
+    {
+      "agent": "monorepo-orchestrator",
+      "priority": 5,
+      "parallelizable": false
+    }
+  ],
+  "parallelStrategy": {
+    "maxConcurrency": 4,
+    "batchSizes": {
+      "generation": 2,
+      "quality": 2,
+      "coordination": 1
+    },
+    "resourceAllocation": {
+      "high-cpu": [
+        "ui-architect",
+        "monorepo-orchestrator"
+      ],
+      "medium-cpu": [
+        "tailwind-stylist",
+        "vitest-tester"
+      ],
+      "low-cpu": [
+        "biome-linter"
+      ]
+    },
+    "loadBalancing": "round-robin"
+  },
+  "coordinationOverhead": 1100,
+  "expectedSpeedup": 3.6
+}

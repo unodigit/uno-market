@@ -1,0 +1,32 @@
+{
+  "ui-architect": {
+    "attempts": 2,
+    "delay": 1000,
+    "backoff": "exponential",
+    "timeoutMultiplier": 1
+  },
+  "tailwind-stylist": {
+    "attempts": 2,
+    "delay": 500,
+    "backoff": "linear",
+    "timeoutMultiplier": 1
+  },
+  "biome-linter": {
+    "attempts": 3,
+    "delay": 200,
+    "backoff": "linear",
+    "timeoutMultiplier": 1
+  },
+  "vitest-tester": {
+    "attempts": 2,
+    "delay": 1000,
+    "backoff": "exponential",
+    "timeoutMultiplier": 1.5
+  },
+  "monorepo-orchestrator": {
+    "attempts": 1,
+    "delay": 0,
+    "backoff": "none",
+    "timeoutMultiplier": 1
+  }
+}
