@@ -78,3 +78,4 @@ pnpm-lock.yaml
 docs/
 specs/
 .specify/
+.claude/
