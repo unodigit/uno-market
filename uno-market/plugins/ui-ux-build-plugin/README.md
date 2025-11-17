@@ -61,11 +61,14 @@ A production-ready Claude Code plugin that revolutionizes frontend development t
 
 **🏆 Uno Marketplace Installation (Recommended):**
 ```bash
-# Add Uno Marketplace
-claude> /plugin marketplace add https://github.com/uno-market/marketplace
+# Add Uno Marketplace (local directory during development)
+claude> /plugin marketplace add ./uno-market
 
 # Install the plugin
 claude> /plugin install ui-ux-build-plugin@uno-market
+
+# When published, use remote repository:
+# claude> /plugin marketplace add https://github.com/uno-market/marketplace
 ```
 
 **Direct Installation:**

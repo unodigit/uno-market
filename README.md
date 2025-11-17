@@ -63,6 +63,10 @@ uno-market/                                    # ✅ Premium Plugin Marketplace
 
 **Step 1: Add Uno Marketplace**
 ```bash
+# Add from local directory (development)
+claude> /plugin marketplace add ./uno-market
+
+# OR add from remote repository (when published)
 claude> /plugin marketplace add https://github.com/uno-market/marketplace
 ```
 
@@ -76,6 +80,8 @@ claude> /plugin install ui-ux-build-plugin@uno-market
 claude> /plugin list
 # Should show: ui-ux-build-plugin@uno-market ✅
 ```
+
+**Note**: The marketplace uses a local directory structure during development. When published, it will be available from the remote repository.
 
 ### First Experience
 

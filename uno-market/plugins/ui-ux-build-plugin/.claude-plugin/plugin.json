@@ -1,0 +1,13 @@
+{
+  "name": "ui-ux-build-plugin",
+  "version": "1.0.0",
+  "description": "Comprehensive plugin for frontend development with parallel agent orchestration and automated quality enforcement",
+  "author": {
+    "name": "FrontEnd Development Team",
+    "email": "dev@uno-market.com"
+  },
+  "license": "MIT",
+  "keywords": ["react", "typescript", "tailwind", "biome", "vitest", "automation", "quality", "parallel", "frontend", "ui", "ux"],
+  "repository": "https://github.com/uno-market/ui-ux-build-plugin",
+  "homepage": "https://uno-market.com/plugins/ui-ux-build-plugin"
+}

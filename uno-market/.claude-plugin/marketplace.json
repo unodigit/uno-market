@@ -2,158 +2,25 @@
   "name": "uno-market",
   "version": "1.0.0",
   "description": "Premium marketplace for high-quality Claude Code plugins focused on frontend development and developer experience",
+  "url": "https://github.com/uno-market/marketplace",
   "owner": {
     "name": "FrontEnd Development Team",
-    "email": "dev@uno-market.com",
-    "website": "https://uno-market.com",
-    "repository": "https://github.com/uno-market/marketplace"
-  },
-  "marketplace": {
-    "id": "uno-market",
-    "displayName": "Uno Marketplace",
-    "tagline": "Premium Claude Code Plugins for Modern Frontend Development",
-    "category": "development-tools",
-    "tags": ["frontend", "ui", "ux", "react", "typescript", "tailwind", "automation", "quality"],
-    "license": "MIT",
-    "homepage": "https://uno-market.com/docs",
-    "documentation": "https://uno-market.com/docs/getting-started",
-    "support": "https://github.com/uno-market/marketplace/issues"
-  },
-  "compatibility": {
-    "claudeCode": {
-      "minVersion": "1.0.0",
-      "maxVersion": null,
-      "testedVersions": ["1.0.0", "1.1.0"]
-    },
-    "platforms": ["darwin", "linux", "win32"],
-    "nodeVersion": ">=18.0.0",
-    "requirements": {
-      "git": true,
-      "npm": ">=8.0.0",
-      "optional": ["pnpm", "yarn"]
-    }
+    "email": "dev@uno-market.com"
   },
   "plugins": [
     {
       "name": "ui-ux-build-plugin",
-      "displayName": "FrontEnd UI/UX Build Plugin",
       "version": "1.0.0",
       "description": "Comprehensive plugin for frontend development with parallel agent orchestration and automated quality enforcement",
+      "source": "./plugins/ui-ux-build-plugin",
       "author": {
         "name": "FrontEnd Development Team",
         "email": "dev@uno-market.com"
       },
-      "repository": "https://github.com/uno-market/ui-ux-build-plugin",
-      "tags": ["react", "typescript", "tailwind", "biome", "vitest", "automation", "quality", "parallel"],
-      "category": "development-tools",
-      "keywords": ["frontend", "ui", "ux", "components", "testing", "linting", "formatting"],
       "license": "MIT",
-      "homepage": "https://uno-market.com/plugins/ui-ux-build-plugin",
-      "bugs": "https://github.com/uno-market/ui-ux-build-plugin/issues",
-      "dependencies": {
-        "claude-code": ">=1.0.0",
-        "node": ">=18.0.0",
-        "npm": ">=8.0.0"
-      },
-      "peerDependencies": {
-        "@biomejs/biome": ">=1.5.0",
-        "typescript": ">=5.0.0",
-        "tailwindcss": ">=3.4.0"
-      },
-      "capabilities": [
-        "parallel-agent-orchestration",
-        "automated-quality-enforcement",
-        "component-scaffolding",
-        "design-system-integration",
-        "typescript-type-checking",
-        "biome-linting-formatting",
-        "vitest-testing",
-        "tailwind-configuration"
-      ],
-      "features": [
-        "Parallel agent execution with 3.6x speedup",
-        "95% automatic quality correction rate",
-        "<200ms hook execution latency",
-        "Automated Tailwind CSS configuration management",
-        "Multi-model cost optimization (Sonnet 4.5 + GLM 4.6)",
-        "Marketplace-first distribution through uno-market"
-      ],
-      "installation": {
-        "commands": 4,
-        "agents": 5,
-        "hooks": 9,
-        "skills": 4,
-        "scripts": 8
-      },
-      "performance": {
-        "hookLatency": "<200ms",
-        "parallelSpeedup": "3.6x",
-        "qualityCorrectionRate": "95%",
-        "costOptimization": "40%"
-      },
-      "quality": {
-        "automatedCorrectionRate": 95,
-        "typeChecking": true,
-        "linting": true,
-        "formatting": true,
-        "testing": true
-      },
-      "metrics": {
-        "successCriteria": [
-          "SC-001: Plugin installation <5 minutes",
-          "SC-002: Component development 30% faster",
-          "SC-003: 95% automatic quality corrections",
-          "SC-007: 90% user success rate",
-          "SC-008: Automatic Tailwind config updates"
-        ]
-      }
+      "keywords": ["react", "typescript", "tailwind", "biome", "vitest", "automation", "quality", "parallel", "frontend", "ui", "ux"],
+      "repository": "https://github.com/uno-market/ui-ux-build-plugin",
+      "homepage": "https://uno-market.com/plugins/ui-ux-build-plugin"
     }
-  ],
-  "policies": {
-    "approvalRequired": true,
-    "securityStandards": [
-      "dependency-scanning",
-      "code-analysis",
-      "permission-model",
-      "data-privacy"
-    ],
-    "qualityThresholds": {
-      "testCoverage": 80,
-      "lintingScore": 95,
-      "documentationCompleteness": 90,
-      "performanceScore": 85
-    },
-    "compatibilityRequirements": {
-      "crossPlatform": true,
-      "versionCompatibility": "semver",
-      "breakingChanges": "major-version-required"
-    }
-  },
-  "statistics": {
-    "totalPlugins": 1,
-    "categories": {
-      "development-tools": 1
-    },
-    "lastUpdated": "2025-11-17T10:00:00Z",
-    "maintainedBy": "FrontEnd Development Team"
-  },
-  "versioning": {
-    "strategy": "semantic",
-    "autoUpdate": false,
-    "releaseChannel": "stable",
-    "changelogFormat": "conventional"
-  },
-  "security": {
-    "codeScanning": true,
-    "dependencyAudit": true,
-    "permissionValidation": true,
-    "dataPrivacy": true
-  },
-  "support": {
-    "documentation": "https://uno-market.com/docs",
-    "community": "https://github.com/uno-market/marketplace/discussions",
-    "issues": "https://github.com/uno-market/marketplace/issues",
-    "updates": "https://uno-market.com/blog",
-    "responseTime": "48h"
-  }
+  ]
 }
