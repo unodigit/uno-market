@@ -441,7 +441,7 @@ class MarketplacePublisher {
             'scripts/**/*',
             'hooks/**/*',
             'config/**/*',
-            'templates/**/*',
+            // 'templates/**/*', // Removed - unused
             'README.md',
             'LICENSE',
             'CHANGELOG.md'
@@ -648,7 +648,7 @@ class MarketplacePublisher {
             'scripts/**/*',
             'hooks/**/*',
             'config/**/*',
-            'templates/**/*',
+            // 'templates/**/*', // Removed - unused
             '*.md',
             '*.json'
         ];

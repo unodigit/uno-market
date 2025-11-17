@@ -45,7 +45,7 @@ function logTest(message) {
     log(`🧪 ${message}`, 'magenta');
 }
 
-// Test file templates
+// Test file patterns // templates removed
 const testFiles = {
     typescriptComponent: `import React, { useState, useEffect } from 'react';
 

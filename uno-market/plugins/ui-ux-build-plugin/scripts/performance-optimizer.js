@@ -330,7 +330,7 @@ class PerformanceOptimizer {
     // Analyze cache hit patterns
     const cacheAnalysis = {
       commonPatterns: [
-        'component scaffolding templates',
+        'component scaffolding', // templates removed - unused
         'Tailwind utility class combinations',
         'Biome linting rules',
         'Test generation patterns'
@@ -346,7 +346,7 @@ class PerformanceOptimizer {
       maxSize: Math.min(this.config.caching.maxSize, 50), // Optimize size based on analysis
       ttl: this.config.caching.ttl,
       strategies: {
-        'component-templates': { ttl: 600000, maxSize: 20 }, // 10 minutes
+        // 'component-templates': { ttl: 600000, maxSize: 20 }, // Removed - templates unused
         'styling-patterns': { ttl: 300000, maxSize: 15 },   // 5 minutes
         'linting-results': { ttl: 120000, maxSize: 10 },    // 2 minutes
         'test-patterns': { ttl: 300000, maxSize: 5 }       // 5 minutes
@@ -531,7 +531,7 @@ class PerformanceOptimizer {
       'Consider implementing agent-specific optimization profiles',
       'Set up automated performance regression testing',
       'Monitor resource usage during peak development periods',
-      'Regularly review and optimize prompt templates for efficiency'
+      'Regularly review and optimize prompt patterns for efficiency' // templates removed
     ];
   }
 

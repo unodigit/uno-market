@@ -119,8 +119,8 @@ Uses GLM 4.6 for:
 - Integrates spacing token changes
 - Maintains consistency with design system
 
-### Template Integration
-- Uses templates from `config/tailwind.config.template.js`
+### Pattern Integration
+- Uses configuration from `config/tailwind.config.template.js`
 - Applies consistent styling patterns
 - Maintains brand guidelines
 - Ensures design system compliance

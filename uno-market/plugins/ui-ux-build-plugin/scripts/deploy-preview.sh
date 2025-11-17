@@ -329,7 +329,7 @@ create_deployment_package() {
         cp -r "${PLUGIN_ROOT}/scripts" "${package_dir}/"
         cp -r "${PLUGIN_ROOT}/hooks" "${package_dir}/"
         cp -r "${PLUGIN_ROOT}/config" "${package_dir}/"
-        cp -r "${PLUGIN_ROOT}/templates" "${package_dir}/" 2>/dev/null || true
+        # Templates removed - unused in current implementation
 
         # Copy root files
         cp "${PLUGIN_ROOT}/README.md" "${package_dir}/" 2>/dev/null || true
