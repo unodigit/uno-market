@@ -1,7 +1,5 @@
 ---
 description: "Run automated linting and formatting across the entire codebase"
-toolPermissions: ["Read", "Write", "Edit", "Bash", "Task"]
-timeoutMs: 60000
 ---
 
 # /lint-fix-all

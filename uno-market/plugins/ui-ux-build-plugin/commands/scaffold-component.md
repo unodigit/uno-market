@@ -1,8 +1,5 @@
 ---
 description: "Generate React components with parallel agent orchestration"
-toolPermissions: ["Read", "Write", "Edit", "Bash", "Task"]
-timeoutMs: 45000
-parallelExecution: true
 ---
 
 # /scaffold-component

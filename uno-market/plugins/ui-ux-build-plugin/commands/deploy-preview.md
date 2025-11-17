@@ -1,7 +1,5 @@
 ---
 description: "Deploy plugin preview for testing and validation before marketplace release"
-toolPermissions: ["Read", "Write", "Edit", "Bash", "Task"]
-timeoutMs: 120000
 ---
 
 # /deploy-preview
