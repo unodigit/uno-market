@@ -1,0 +1,110 @@
+{
+  "shopify": {
+    "detection": {
+      "meta_tag": "shopify",
+      "script_src": "cdn.shopify.com",
+      "html_patterns": [
+        "Shopify.shop",
+        "shopify-section"
+      ]
+    },
+    "api_endpoints": [
+      "/products.json",
+      "/collections/{handle}/products.json",
+      "/products/{product_id}.json"
+    ],
+    "pagination": {
+      "type": "traditional",
+      "param_name": "page",
+      "items_per_page": 30
+    }
+  },
+  "wordpress": {
+    "detection": {
+      "meta_tag": "wordpress",
+      "script_src": "wp-content",
+      "html_patterns": [
+        "wp-json",
+        "wp-includes"
+      ]
+    },
+    "api_endpoints": [
+      "/wp-json/wp/v2/posts",
+      "/wp-json/wp/v2/pages",
+      "/wp-json/wc/v3/products"
+    ],
+    "pagination": {
+      "type": "api_pagination",
+      "param_name": "page",
+      "items_per_page": 10
+    }
+  },
+  "woocommerce": {
+    "detection": {
+      "meta_tag": "woocommerce",
+      "script_src": "woocommerce",
+      "html_patterns": [
+        "woocommerce-page",
+        "wc-"
+      ]
+    },
+    "api_endpoints": [
+      "/wp-json/wc/v3/products",
+      "/wp-json/wc/store/products"
+    ],
+    "pagination": {
+      "type": "api_pagination",
+      "param_name": "page",
+      "items_per_page": 20
+    }
+  },
+  "magento": {
+    "detection": {
+      "meta_tag": "magento",
+      "script_src": "magento",
+      "html_patterns": [
+        "Magento_",
+        "mage/"
+      ]
+    },
+    "api_endpoints": [
+      "/rest/V1/products",
+      "/api/rest/products"
+    ],
+    "pagination": {
+      "type": "api_pagination",
+      "param_name": "searchCriteria[currentPage]",
+      "items_per_page": 20
+    }
+  },
+  "bigcommerce": {
+    "detection": {
+      "meta_tag": "bigcommerce",
+      "script_src": "bigcommerce",
+      "html_patterns": [
+        "bigcommerce"
+      ]
+    },
+    "api_endpoints": [
+      "/api/storefront/products"
+    ],
+    "pagination": {
+      "type": "api_pagination",
+      "param_name": "page",
+      "items_per_page": 50
+    }
+  },
+  "custom": {
+    "detection": {
+      "meta_tag": null,
+      "script_src": null,
+      "html_patterns": []
+    },
+    "api_endpoints": [],
+    "pagination": {
+      "type": "unknown",
+      "param_name": "page",
+      "items_per_page": 20
+    }
+  }
+}

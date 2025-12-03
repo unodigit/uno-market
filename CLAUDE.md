@@ -124,7 +124,8 @@ claude> /validate-installation
 
 ### Development Documentation
 - **specs/001-ui-ux-plugin/** - Complete specification and design
-- **docs/speckit.*.md** - Speckit workflow documentation
+- **docs/ui-ux-plugin/speckit.*.md** - Speckit workflow documentation
+- **docs/ui-ux-plugin/prd.md** - Product Requirements Document
 - **Template files** - Component scaffolding templates
 
 ## 🏆 Achievements
@@ -152,3 +153,12 @@ The plugin is production-ready with all user stories complete. Remaining work fo
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->
+
+## Active Technologies
+- Python 3.8+ + `requests` (API scraping), `playwright` + `playwright-stealth` (browser automation) (002-python-web-scraper-plugin)
+- Local filesystem (`venv/` for environment, `logs/`, `metrics/`, `scrapers/` for outputs) (002-python-web-scraper-plugin)
+- Python 3.8+ (as specified in constitution) + requests (HTTP), playwright + playwright-stealth (browser automation), uv/pip (package management) (002-python-web-scraper-plugin)
+- Local filesystem (JSON output files: {source}_items_{timestamp}.json, {source}_metadata_{timestamp}.json) (002-python-web-scraper-plugin)
+
+## Recent Changes
+- 002-python-web-scraper-plugin: Added Python 3.8+ + `requests` (API scraping), `playwright` + `playwright-stealth` (browser automation)

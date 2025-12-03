@@ -1,0 +1,131 @@
+{
+  "name": "python-web-scraper-plugin",
+  "version": "1.0.0",
+  "description": "AI-powered web scraping plugin with investigation-first methodology, automatic API discovery, browser automation fallback, and self-healing output validation",
+  "author": "uno-market",
+  "license": "MIT",
+  "repository": "https://github.com/uno-market/python-web-scraper-plugin",
+  "keywords": [
+    "web-scraping",
+    "playwright",
+    "api-discovery",
+    "browser-automation",
+    "data-extraction",
+    "pagination-detection",
+    "qa-validation"
+  ],
+  "claude_code_version": ">=1.0.0",
+  "dependencies": {
+    "python": ">=3.8",
+    "requests": ">=2.31.0",
+    "playwright": ">=1.40.0",
+    "playwright-stealth": ">=1.0.0",
+    "pydantic": ">=2.0.0",
+    "libcst": ">=1.1.0",
+    "structlog": ">=23.0.0",
+    "pytest": ">=7.4.0"
+  },
+  "commands": [
+    {
+      "name": "scrape-url",
+      "description": "Complete scraping workflow (investigation + scraping + validation)",
+      "file": "commands/scrape-url.md"
+    },
+    {
+      "name": "investigate-url",
+      "description": "API discovery and platform detection only",
+      "file": "commands/investigate-url.md"
+    },
+    {
+      "name": "detect-pagination",
+      "description": "Detect pagination type and strategy",
+      "file": "commands/detect-pagination.md"
+    },
+    {
+      "name": "analyze-dom",
+      "description": "Analyze DOM structure and generate selectors",
+      "file": "commands/analyze-dom.md"
+    },
+    {
+      "name": "validate-output",
+      "description": "Validate scraped data against schema",
+      "file": "commands/validate-output.md"
+    },
+    {
+      "name": "qa-crosscheck",
+      "description": "Cross-check items and metadata consistency",
+      "file": "commands/qa-crosscheck.md"
+    },
+    {
+      "name": "metrics-report",
+      "description": "Generate metrics report for scraping sessions",
+      "file": "commands/metrics-report.md"
+    }
+  ],
+  "agents": [
+    {
+      "name": "api-investigator",
+      "description": "Discovers API endpoints and platform type",
+      "file": "agents/api-investigator.md"
+    },
+    {
+      "name": "pagination-detector",
+      "description": "Detects pagination patterns",
+      "file": "agents/pagination-detector.md"
+    },
+    {
+      "name": "dom-analyzer",
+      "description": "Analyzes DOM structure and generates selectors",
+      "file": "agents/dom-analyzer.md"
+    },
+    {
+      "name": "code-generator",
+      "description": "Generates scraper code from analysis",
+      "file": "agents/code-generator.md"
+    },
+    {
+      "name": "qa-crosschecker",
+      "description": "Validates output consistency and auto-refactors",
+      "file": "agents/qa-crosschecker.md"
+    }
+  ],
+  "hooks": [
+    {
+      "type": "post-output",
+      "name": "auto-qa-crosscheck",
+      "description": "Automatically validate output after scraping",
+      "script": "hooks/post-output.sh"
+    }
+  ],
+  "configuration": {
+    "environment_setup": {
+      "package_manager": "uv",
+      "fallback_manager": "pip",
+      "venv_path": "venv",
+      "auto_setup": true
+    },
+    "qa_thresholds": {
+      "item_count_variance": 0.02,
+      "item_count_absolute": 3,
+      "timestamp_deviation_seconds": 60,
+      "field_completeness_variance": 0.05,
+      "cross_reference_tolerance": 0.0
+    },
+    "scraping_defaults": {
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+      "headless": true,
+      "stealth_mode": true,
+      "timeout_ms": 30000,
+      "retry_attempts": 3
+    },
+    "output_format": {
+      "items_filename_pattern": "{source_name}_items_{timestamp}.json",
+      "metadata_filename_pattern": "{source_name}_metadata_{timestamp}.json",
+      "timestamp_format": "%Y%m%d_%H%M%S"
+    }
+  },
+  "installation": {
+    "setup_script": "scripts/setup_environment.sh",
+    "post_install": "scripts/validate_installation.py"
+  }
+}

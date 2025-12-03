@@ -21,6 +21,20 @@
       "keywords": ["react", "typescript", "tailwind", "biome", "vitest", "automation", "quality", "parallel", "frontend", "ui", "ux"],
       "repository": "https://github.com/uno-market/ui-ux-build-plugin",
       "homepage": "https://uno-market.com/plugins/ui-ux-build-plugin"
+    },
+    {
+      "name": "python-web-scraper-plugin",
+      "version": "1.0.0",
+      "description": "AI-powered web scraping plugin with investigation-first methodology, automatic API discovery, browser automation fallback, and self-healing output validation",
+      "source": "./plugins/python-web-scraper-plugin",
+      "author": {
+        "name": "FrontEnd Development Team",
+        "email": "dev@uno-market.com"
+      },
+      "license": "MIT",
+      "keywords": ["web-scraping", "playwright", "api-discovery", "browser-automation", "data-extraction", "pagination-detection", "qa-validation", "self-healing", "python"],
+      "repository": "https://github.com/uno-market/python-web-scraper-plugin",
+      "homepage": "https://uno-market.com/plugins/python-web-scraper-plugin"
     }
   ]
 }

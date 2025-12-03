@@ -1,0 +1,89 @@
+{
+  "common_api_paths": [
+    "/api/products",
+    "/api/v1/products",
+    "/api/v2/products",
+    "/api/items",
+    "/api/listings",
+    "/products.json",
+    "/items.json",
+    "/api/search",
+    "/api/catalog"
+  ],
+  "wordpress_patterns": [
+    "/wp-json/wp/v2/posts",
+    "/wp-json/wp/v2/pages",
+    "/wp-json/wc/v3/products",
+    "/wp-json/wc/store/products"
+  ],
+  "shopify_patterns": [
+    "/products.json",
+    "/collections/{handle}/products.json",
+    "/products/{product_id}.json",
+    "/collections.json"
+  ],
+  "magento_patterns": [
+    "/rest/V1/products",
+    "/rest/default/V1/products",
+    "/api/rest/products"
+  ],
+  "bigcommerce_patterns": [
+    "/api/storefront/products",
+    "/api/v2/catalog/products",
+    "/api/v3/catalog/products"
+  ],
+  "headless_cms_patterns": [
+    "/api/content",
+    "/api/entries",
+    "/graphql",
+    "/content/items"
+  ],
+  "pagination_params": [
+    "page",
+    "offset",
+    "limit",
+    "cursor",
+    "after",
+    "before",
+    "skip",
+    "take",
+    "per_page",
+    "pageSize"
+  ],
+  "content_type_indicators": {
+    "json": [
+      "application/json",
+      "application/ld+json",
+      "application/hal+json"
+    ],
+    "xml": [
+      "application/xml",
+      "text/xml",
+      "application/rss+xml"
+    ],
+    "html": [
+      "text/html",
+      "application/xhtml+xml"
+    ]
+  },
+  "authentication_patterns": {
+    "bearer_token": "Authorization: Bearer {token}",
+    "api_key_header": "X-API-Key: {key}",
+    "api_key_param": "?api_key={key}",
+    "basic_auth": "Authorization: Basic {base64}"
+  },
+  "rate_limiting_headers": [
+    "X-Rate-Limit-Limit",
+    "X-Rate-Limit-Remaining",
+    "X-Rate-Limit-Reset",
+    "Retry-After",
+    "X-RateLimit-Limit",
+    "X-RateLimit-Remaining"
+  ],
+  "common_response_structures": {
+    "items_array": ["items", "results", "data", "products", "entries"],
+    "pagination_metadata": ["meta", "pagination", "_metadata", "page_info"],
+    "next_page_indicators": ["next", "next_page", "has_next", "has_more", "links.next"],
+    "total_count_fields": ["total", "total_count", "totalItems", "count"]
+  }
+}
