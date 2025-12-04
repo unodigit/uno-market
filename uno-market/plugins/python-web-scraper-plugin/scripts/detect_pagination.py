@@ -12,10 +12,18 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict, Optional
 
-from playwright.async_api import async_playwright, TimeoutError as PlaywrightTimeoutError
-
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent))
+
+# Ensure we're running in virtual environment
+try:
+    from ensure_venv import ensure_venv
+    ensure_venv()
+except RuntimeError as e:
+    print(f"ERROR: {e}", file=sys.stderr)
+    sys.exit(1)
+
+from playwright.async_api import async_playwright, TimeoutError as PlaywrightTimeoutError
 from models import PaginationType, ConfidenceLevel, PaginationStrategy, ImplementationDetails, PaginationSelectors
 
 # Constants

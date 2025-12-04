@@ -13,6 +13,15 @@ from pathlib import Path
 from typing import Dict, List, Optional
 from urllib.parse import urljoin, urlparse
 
+# Ensure we're running in virtual environment
+sys.path.insert(0, str(Path(__file__).parent))
+try:
+    from ensure_venv import ensure_venv
+    ensure_venv()
+except RuntimeError as e:
+    print(f"ERROR: {e}", file=sys.stderr)
+    sys.exit(1)
+
 import requests
 from bs4 import BeautifulSoup
 from playwright.async_api import async_playwright
