@@ -29,27 +29,29 @@ Before deployment, run comprehensive validation:
 
 ### Step 2: Package Generation
 
-Create a deployable Python package:
+Create a deployable Python package using `pyproject.toml`:
 
-```python
+> **IMPORTANT:** Only list `deepagents` as a dependency. LangGraph, LangChain, and other packages are transitive dependencies that get installed automatically.
+
+```toml
 # Generated pyproject.toml
-[build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "my-deepagent"
 version = "1.0.0"
+requires-python = ">=3.11"
 dependencies = [
-    "deepagents>=0.3.0",
-    "langgraph>=0.2.0",
-    "langchain-core>=0.3.0",
-    "langchain-anthropic>=0.3.0",
+    "deepagents>=0.3.1",
 ]
 
 [project.scripts]
 my-agent = "my_deepagent.main:run"
+
+[build-system]
+requires = ["setuptools>=73.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
 ```
+
+> **Note:** Do NOT add `langgraph`, `langchain-core`, or `langchain-anthropic` - they come with `deepagents`.
 
 ### Step 3: Environment Configuration
 
@@ -71,16 +73,19 @@ AGENT_TIMEOUT=300
 
 ### Step 4: Docker Support (Optional)
 
-Generate Dockerfile for containerized deployment:
+Generate Dockerfile for containerized deployment using `uv`:
 
 ```dockerfile
 FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install dependencies
+# Install uv for fast package management
+RUN pip install uv
+
+# Install dependencies using uv
 COPY pyproject.toml .
-RUN pip install --no-cache-dir .
+RUN uv pip install --system .
 
 # Copy agent code
 COPY src/ ./src/
@@ -90,6 +95,24 @@ ENV PYTHONUNBUFFERED=1
 
 # Run agent
 CMD ["python", "-m", "my_deepagent.main"]
+```
+
+Alternative multi-stage build with uv:
+
+```dockerfile
+FROM ghcr.io/astral-sh/uv:python3.11-bookworm-slim
+
+WORKDIR /app
+
+# Copy and install dependencies
+COPY pyproject.toml .
+RUN uv sync --frozen
+
+# Copy agent code
+COPY src/ ./src/
+
+ENV PYTHONUNBUFFERED=1
+CMD ["uv", "run", "python", "-m", "my_deepagent.main"]
 ```
 
 And docker-compose.yml:
@@ -111,10 +134,14 @@ Present deployment options based on agent requirements:
 
 #### Option A: Local/Server Deployment
 ```bash
-# Install package
-pip install -e .
+# Install dependencies using uv (recommended)
+uv sync
 
 # Run agent
+uv run my-agent --input "Your task here"
+
+# Or install editable and run directly
+uv pip install -e .
 my-agent --input "Your task here"
 ```
 

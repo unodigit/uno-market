@@ -1,6 +1,6 @@
 {
   "name": "deepagents-builder-plugin",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Build production-ready agentic workflows with LangChain DeepAgents and LangGraph - includes interactive agent creation, workflow visualization, testing, and deployment",
   "author": {
     "name": "LangChain Community",

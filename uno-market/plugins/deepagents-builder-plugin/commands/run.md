@@ -12,9 +12,16 @@ When the user wants to run an agent:
 
 1. **Locate the agent file**: Look for Python files in the current directory containing `create_deep_agent` or agent configurations.
 
-2. **Validate prerequisites**:
+2. **Validate prerequisites** (run these checks):
+   ```bash
+   # Check deepagents is installed
+   python3 -c "import deepagents" 2>/dev/null || uv pip install deepagents
+   
+   # Check API keys
+   [[ -n "$ANTHROPIC_API_KEY" ]] && echo "✓ ANTHROPIC_API_KEY set" || echo "⚠ ANTHROPIC_API_KEY not set"
+   ```
+   - If deepagents not installed: `uv pip install deepagents` (or `pip install deepagents`)
    - Check for required API keys (ANTHROPIC_API_KEY, OPENAI_API_KEY, etc.)
-   - Verify deepagents package is installed
    - Confirm any MCP servers are accessible
 
 3. **Execute with streaming**:
@@ -51,6 +58,13 @@ asyncio.run(run())
 
 ## Error Handling
 
-- Missing API keys: Provide specific export commands
-- Import errors: Suggest pip install commands
-- Tool failures: Show error context and retry options
+- **Missing API keys**: Provide specific export commands:
+  ```bash
+  export ANTHROPIC_API_KEY=your_key_here
+  ```
+- **Import errors**: Install deepagents (includes all dependencies):
+  ```bash
+  uv pip install deepagents  # recommended
+  # or: pip install deepagents
+  ```
+- **Tool failures**: Show error context and retry options

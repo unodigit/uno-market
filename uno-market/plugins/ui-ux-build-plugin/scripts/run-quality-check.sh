@@ -145,10 +145,26 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# Validate directory
+# Validate directory - gracefully skip if not a frontend project
 if [[ ! -d "${DIRECTORY}" ]]; then
-    log_error "Directory not found: ${DIRECTORY}"
-    exit 1
+    # Exit gracefully (code 0) to not block other plugins
+    # This hook may run in non-frontend projects where src/ doesn't exist
+    if [[ "${OUTPUT_FORMAT}" == "json" ]]; then
+        echo '{"status": "skipped", "reason": "Directory not found: '"${DIRECTORY}"'", "context": "Not a frontend project"}'
+    else
+        log_info "Skipping quality check - directory not found: ${DIRECTORY} (not a frontend project)"
+    fi
+    exit 0
+fi
+
+# Also check if this looks like a frontend project (has package.json or tsconfig.json)
+if [[ ! -f "package.json" && ! -f "tsconfig.json" ]]; then
+    if [[ "${OUTPUT_FORMAT}" == "json" ]]; then
+        echo '{"status": "skipped", "reason": "Not a frontend project (no package.json or tsconfig.json)"}'
+    else
+        log_info "Skipping quality check - not a frontend project (no package.json or tsconfig.json)"
+    fi
+    exit 0
 fi
 
 # Convert file types to glob pattern

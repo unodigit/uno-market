@@ -1,0 +1,57 @@
+[project]
+name = "deepagents-builder-plugin"
+version = "1.0.3"
+description = "Build production-ready agentic workflows with LangChain DeepAgents and LangGraph in Claude Code"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [
+    { name = "LangChain Community", email = "community@langchain.com" }
+]
+keywords = [
+    "langchain",
+    "langgraph",
+    "deepagents",
+    "multi-agent",
+    "workflow",
+    "agentic",
+    "orchestration",
+    "hitl",
+    "state-machine"
+]
+
+dependencies = [
+    "deepagents>=0.3.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "mypy>=1.11.0",
+    "ruff>=0.6.0",
+]
+
+[project.urls]
+Homepage = "https://docs.langchain.com/oss/python/deepagents/overview"
+Repository = "https://github.com/langchain-ai/deepagents"
+Documentation = "https://github.com/langchain-ai/deepagents"
+
+[build-system]
+requires = ["setuptools>=73.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+lint.select = [
+    "E",    # pycodestyle
+    "F",    # pyflakes
+    "I",    # isort
+    "UP",   # pyupgrade
+]
+lint.ignore = [
+    "E501",  # line too long
+]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+

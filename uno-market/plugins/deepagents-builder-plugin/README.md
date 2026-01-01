@@ -1,5 +1,7 @@
 # LangChain DeepAgents Plugin for Claude Code
 
+[![Version](https://img.shields.io/badge/version-1.0.3-blue.svg)](./CHANGELOG.md)
+
 Build production-ready agentic workflows with LangChain DeepAgents directly in Claude Code.
 
 ## Quick Start
@@ -14,6 +16,20 @@ Build production-ready agentic workflows with LangChain DeepAgents directly in C
 # Restart Claude Code, then try:
 /deepagent:create
 ```
+
+## Requirements
+
+The plugin will automatically install the `deepagents` package on first use:
+
+```bash
+# Using uv (recommended - 10-100x faster)
+uv pip install deepagents
+
+# Or using pip
+pip install deepagents
+```
+
+> **Note:** The `deepagents` package includes `langgraph` and `langchain` as transitive dependencies.
 
 ## Features
 

@@ -39,6 +39,29 @@ Prompt: "Create a research assistant agent that searches the web for
 information and writes structured summaries to markdown files."
 ```
 
+### Dependency Management
+
+All generated agents use `pyproject.toml` with **only `deepagents`** as a dependency:
+
+```toml
+[project]
+name = "my-agent"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "deepagents>=0.3.1",
+]
+```
+
+Install and run using `uv`:
+
+```bash
+uv sync           # Install dependencies
+uv run python my_agent.py  # Run agent
+```
+
+> **Note:** Do NOT add `langgraph`, `langchain-core`, or `langchain-anthropic` to dependencies - they are automatically installed as transitive dependencies of `deepagents`.
+
 ---
 
 ## Slash Commands
@@ -655,8 +678,14 @@ export LANGSMITH_API_KEY=your_key_here  # Optional, for tracing
 
 **"Module not found: deepagents"**
 ```bash
-pip install deepagents langgraph langchain-anthropic
+# Using uv (recommended - 10-100x faster)
+uv pip install deepagents
+
+# Or using pip
+pip install deepagents
 ```
+
+> **Note:** The `deepagents` package includes `langgraph` and `langchain` as transitive dependencies. You don't need to install them separately.
 
 **"Graph compilation failed"**
 - Check that all nodes have edges to END
@@ -679,4 +708,4 @@ pip install deepagents langgraph langchain-anthropic
 
 ---
 
-*Generated for DeepAgents Builder Plugin v1.0.0*
+*Generated for DeepAgents Builder Plugin v1.0.3*

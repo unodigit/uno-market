@@ -251,21 +251,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Set up Python
+        run: uv python install 3.11
 
       - name: Install dependencies
-        run: pip install -e ".[test]"
+        run: uv sync --all-extras
 
       - name: Run tests
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: pytest tests/ -v --cov=my_agent
+        run: uv run pytest tests/ -v --cov=my_agent
 
       - name: Upload coverage
         uses: codecov/codecov-action@v4
 ```
+
+> **Note:** The workflow uses `uv` for fast, reliable dependency installation. The `pyproject.toml` should only list `deepagents` as a dependency.
 
 ## Output
 

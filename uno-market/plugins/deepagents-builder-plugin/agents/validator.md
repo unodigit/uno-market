@@ -41,6 +41,12 @@ You are a security and code quality expert specializing in LangChain agent valid
 - [ ] LangSmith tracing configured
 - [ ] Tests included or documented
 
+### Dependency Management
+- [ ] Uses `pyproject.toml` (NOT `requirements.txt`)
+- [ ] Only `deepagents` listed as direct dependency
+- [ ] No redundant dependencies (`langgraph`, `langchain-*` are transitive)
+- [ ] Uses `uv sync` or `uv pip install` (NOT `pip`)
+
 ## Validation Process
 
 1. **Static Analysis**
