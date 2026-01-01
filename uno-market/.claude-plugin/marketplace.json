@@ -35,6 +35,20 @@
       "keywords": ["web-scraping", "playwright", "api-discovery", "browser-automation", "data-extraction", "pagination-detection", "qa-validation", "self-healing", "python"],
       "repository": "https://github.com/uno-market/python-web-scraper-plugin",
       "homepage": "https://uno-market.com/plugins/python-web-scraper-plugin"
+    },
+    {
+      "name": "deepagents-builder-plugin",
+      "version": "1.0.0",
+      "description": "Build production-ready agentic workflows with LangChain DeepAgents and LangGraph - includes interactive agent creation, workflow visualization, testing, and deployment",
+      "source": "./plugins/deepagents-builder-plugin",
+      "author": {
+        "name": "LangChain Community",
+        "url": "https://github.com/langchain-ai"
+      },
+      "license": "MIT",
+      "keywords": ["langchain", "langgraph", "deepagents", "multi-agent", "workflow", "agentic", "orchestration", "hitl", "middleware", "observability"],
+      "repository": "https://github.com/langchain-ai/claude-plugins",
+      "homepage": "https://docs.langchain.com/oss/python/deepagents/overview"
     }
   ]
 }

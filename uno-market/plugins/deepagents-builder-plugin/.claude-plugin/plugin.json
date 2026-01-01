@@ -1,0 +1,23 @@
+{
+  "name": "deepagents-builder-plugin",
+  "version": "1.0.0",
+  "description": "Build production-ready agentic workflows with LangChain DeepAgents and LangGraph - includes interactive agent creation, workflow visualization, testing, and deployment",
+  "author": {
+    "name": "LangChain Community",
+    "url": "https://github.com/langchain-ai"
+  },
+  "homepage": "https://docs.langchain.com/oss/python/deepagents/overview",
+  "repository": "https://github.com/langchain-ai/claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "langchain",
+    "langgraph",
+    "deepagents",
+    "multi-agent",
+    "workflow",
+    "agentic",
+    "orchestration",
+    "hitl",
+    "state-machine"
+  ]
+}

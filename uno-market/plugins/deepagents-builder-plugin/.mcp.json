@@ -1,0 +1,25 @@
+{
+  "mcpServers": {
+    "langchain-docs": {
+      "url": "https://docs.langchain.com/mcp",
+      "transport": "http",
+      "description": "Search LangChain, LangGraph, and DeepAgents documentation"
+    },
+    "langsmith": {
+      "command": "npx",
+      "args": ["-y", "@langchain/langsmith-mcp"],
+      "env": {
+        "LANGSMITH_API_KEY": "${LANGSMITH_API_KEY}"
+      },
+      "description": "Query traces, runs, and evaluations from LangSmith"
+    },
+    "tool-discovery": {
+      "command": "python",
+      "args": ["-m", "deepagents.mcp.tool_registry"],
+      "env": {
+        "TOOL_REGISTRY_PATH": "${CLAUDE_PLUGIN_ROOT}/tools"
+      },
+      "description": "Browse and discover available MCP tools and LangChain integrations"
+    }
+  }
+}
