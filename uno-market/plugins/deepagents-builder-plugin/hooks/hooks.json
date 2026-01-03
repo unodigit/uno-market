@@ -6,6 +6,12 @@
         "hooks": [
           {
             "type": "command",
+            "command": "python ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/api_compliance_check.py",
+            "timeout": 30,
+            "description": "Validate API usage against official DeepAgents patterns and suggest MCP lookups"
+          },
+          {
+            "type": "command",
             "command": "python ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/validate_agent.py",
             "timeout": 30
           }

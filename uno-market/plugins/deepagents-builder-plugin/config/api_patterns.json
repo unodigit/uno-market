@@ -1,0 +1,218 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "API pattern registry for DeepAgents compliance validation",
+  "version": "1.0.0",
+  "mcp_server": {
+    "name": "langchain-docs",
+    "url": "https://docs.langchain.com/mcp",
+    "tool": "SearchDocsByLangChain"
+  },
+  "approved_imports": {
+    "primary": [
+      {
+        "module": "deepagents",
+        "imports": ["create_deep_agent"],
+        "required": true,
+        "description": "Primary agent creation function - ALWAYS use this"
+      }
+    ],
+    "secondary": [
+      {
+        "module": "deepagents.backends",
+        "imports": ["FilesystemBackend", "StateBackend", "CompositeBackend"],
+        "required": false,
+        "description": "Backend storage options"
+      },
+      {
+        "module": "deepagents.middleware",
+        "imports": [
+          "TodoListMiddleware",
+          "SubAgentMiddleware",
+          "FilesystemMiddleware",
+          "SummarizationMiddleware",
+          "HumanInTheLoopMiddleware"
+        ],
+        "required": false,
+        "description": "Optional middleware components"
+      },
+      {
+        "module": "langchain_core.tools",
+        "imports": ["tool", "StructuredTool"],
+        "required": false,
+        "description": "Tool definition decorators"
+      },
+      {
+        "module": "langchain_core.messages",
+        "imports": ["HumanMessage", "AIMessage", "SystemMessage", "ToolMessage"],
+        "required": false,
+        "description": "Message types for conversation"
+      }
+    ]
+  },
+  "forbidden_patterns": [
+    {
+      "pattern": "from langgraph.graph import StateGraph",
+      "reason": "Raw StateGraph is deprecated for agent creation",
+      "correction": "Use create_deep_agent() from deepagents instead",
+      "mcp_query": "create_deep_agent function usage"
+    },
+    {
+      "pattern": "from langgraph.prebuilt import create_react_agent",
+      "reason": "create_react_agent is lower-level than create_deep_agent",
+      "correction": "Use create_deep_agent() from deepagents instead",
+      "mcp_query": "deepagents create_deep_agent vs create_react_agent"
+    },
+    {
+      "pattern": "from langchain.agents import",
+      "reason": "Legacy langchain.agents module is deprecated",
+      "correction": "Use create_deep_agent() from deepagents instead",
+      "mcp_query": "migrating from langchain agents to deepagents"
+    },
+    {
+      "pattern": "from langchain_anthropic import ChatAnthropic",
+      "reason": "Direct model instantiation not needed with create_deep_agent",
+      "correction": "Use model string like 'anthropic:claude-sonnet-4-5-20250929' in create_deep_agent()",
+      "mcp_query": "create_deep_agent model parameter format"
+    },
+    {
+      "pattern": "from langchain_openai import ChatOpenAI",
+      "reason": "Direct model instantiation not needed with create_deep_agent",
+      "correction": "Use model string like 'openai:gpt-4o' in create_deep_agent()",
+      "mcp_query": "create_deep_agent model parameter format"
+    },
+    {
+      "pattern": "graph.add_node",
+      "reason": "Manual graph construction not recommended",
+      "correction": "Use create_deep_agent() with subagents configuration",
+      "mcp_query": "deepagents subagent configuration multi-agent"
+    },
+    {
+      "pattern": "graph.add_edge",
+      "reason": "Manual edge configuration not recommended",
+      "correction": "Use create_deep_agent() which handles graph construction internally",
+      "mcp_query": "deepagents workflow patterns"
+    },
+    {
+      "pattern": "graph.compile",
+      "reason": "Manual graph compilation not needed with create_deep_agent",
+      "correction": "create_deep_agent() returns a ready-to-use agent",
+      "mcp_query": "create_deep_agent return type usage"
+    },
+    {
+      "pattern": "requirements.txt",
+      "reason": "requirements.txt is deprecated in favor of pyproject.toml",
+      "correction": "Use pyproject.toml with only 'deepagents' as dependency",
+      "mcp_query": "deepagents project setup pyproject.toml"
+    },
+    {
+      "pattern": "pip install langgraph",
+      "reason": "langgraph is a transitive dependency of deepagents",
+      "correction": "Install only deepagents: uv pip install deepagents",
+      "mcp_query": "deepagents installation dependencies"
+    },
+    {
+      "pattern": "pip install langchain",
+      "reason": "langchain is a transitive dependency of deepagents",
+      "correction": "Install only deepagents: uv pip install deepagents",
+      "mcp_query": "deepagents installation dependencies"
+    }
+  ],
+  "function_signatures": {
+    "create_deep_agent": {
+      "module": "deepagents",
+      "parameters": {
+        "model": {
+          "type": "str",
+          "required": true,
+          "description": "Model identifier, e.g., 'anthropic:claude-sonnet-4-5-20250929'",
+          "examples": [
+            "anthropic:claude-sonnet-4-5-20250929",
+            "anthropic:claude-opus-4-5-20250929",
+            "openai:gpt-4o"
+          ]
+        },
+        "tools": {
+          "type": "List[Callable]",
+          "required": false,
+          "description": "List of @tool decorated functions",
+          "default": "[]"
+        },
+        "system_prompt": {
+          "type": "str",
+          "required": false,
+          "description": "System instructions for the agent"
+        },
+        "subagents": {
+          "type": "List[dict]",
+          "required": false,
+          "description": "List of subagent configurations for multi-agent patterns"
+        },
+        "middleware": {
+          "type": "List[Middleware]",
+          "required": false,
+          "description": "List of middleware instances"
+        },
+        "backend": {
+          "type": "Backend",
+          "required": false,
+          "description": "FilesystemBackend, StateBackend, or CompositeBackend"
+        },
+        "interrupt_on": {
+          "type": "dict",
+          "required": false,
+          "description": "HITL configuration for sensitive tools"
+        }
+      },
+      "returns": "DeepAgent",
+      "mcp_query": "create_deep_agent complete API reference"
+    },
+    "tool_decorator": {
+      "module": "langchain_core.tools",
+      "name": "@tool",
+      "usage": "Decorator for creating tool functions",
+      "requirements": [
+        "Function must have type hints for all parameters",
+        "Function must have a docstring describing its purpose",
+        "Docstring should include Args section for LLM understanding"
+      ],
+      "mcp_query": "langchain_core.tools tool decorator best practices"
+    }
+  },
+  "dependency_rules": {
+    "pyproject_template": {
+      "required_fields": ["project.name", "project.version", "project.dependencies"],
+      "allowed_dependencies": ["deepagents"],
+      "forbidden_direct_dependencies": [
+        "langgraph",
+        "langchain",
+        "langchain-core",
+        "langchain-anthropic",
+        "langchain-openai"
+      ],
+      "explanation": "These are transitive dependencies of deepagents and should not be listed directly"
+    }
+  },
+  "validation_rules": {
+    "import_check": {
+      "severity": "CRITICAL",
+      "action": "block",
+      "message": "Forbidden import pattern detected"
+    },
+    "signature_mismatch": {
+      "severity": "WARNING",
+      "action": "warn",
+      "message": "Function signature may not match current API"
+    },
+    "missing_docstring": {
+      "severity": "WARNING",
+      "action": "warn",
+      "message": "Tool function missing required docstring"
+    },
+    "dependency_violation": {
+      "severity": "CRITICAL",
+      "action": "block",
+      "message": "Invalid dependency in pyproject.toml"
+    }
+  }
+}
+
