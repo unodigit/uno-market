@@ -154,3 +154,4 @@ When the validation hook detects violations, it will:
 2. Report specific violations
 3. Suggest correct patterns from MCP documentation
 
+
